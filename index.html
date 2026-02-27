@@ -1,0 +1,2532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kottawa Land — Mana Nadula & Pahala Deniya Goda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito:wght@300;400;500;600&family=Noto+Sans+Sinhala:wght@300;400;500&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --void: #060a04;
+      --canopy: #0c1108;
+      --bark: #171208;
+      --peat: #221a0c;
+      --earth: #3a2812;
+      --clay: #6a4428;
+      --stone: #8a6e50;
+      --lichen: #a8906c;
+      --reed: #c8aa80;
+      --papyrus: #e8dcc0;
+      --dew: #f4eedd;
+      --deepmoss: #1e3018;
+      --moss: #2a4422;
+      --fern: #3a5e2e;
+      --leaf: #4c7640;
+      --sage: #68924e;
+      --spring: #88b46a;
+      --creek: #1e3840;
+      --stream: #2c5464;
+      --water: #4a8098;
+      --mist: #78a8b8;
+      --cinnamon: #7a3e18;
+      --spice: #a85c2a;
+      --amber: #c07e30;
+      --honey: #d89e48;
+      --sunray: #e8be68;
+      --pad: clamp(20px, 6vw, 80px);
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--void);
+      color: var(--papyrus);
+      overflow-x: hidden;
+      cursor: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      font-family: inherit;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: -999px;
+      left: 16px;
+      z-index: 9999;
+      background: var(--amber);
+      color: var(--void);
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 2px;
+      transition: top .2s;
+    }
+
+    .skip-link:focus {
+      top: 16px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1001;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: .032;
+      mix-blend-mode: overlay;
+    }
+
+    .cur {
+      position: fixed;
+      width: 9px;
+      height: 9px;
+      background: var(--honey);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width .25s, height .25s;
+      box-shadow: 0 0 10px rgba(200, 160, 72, .35);
+    }
+
+    .cur-ring {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      border: 1px solid rgba(192, 126, 48, .35);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9997;
+      transform: translate(-50%, -50%);
+      transition: left .13s ease, top .13s ease;
+    }
+
+    /* FLOATING LEAVES */
+    .leaves-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .leaf-p {
+      position: absolute;
+      width: var(--lw, 18px);
+      height: calc(var(--lw, 18px)*1.8);
+      background: var(--lc, rgba(74, 118, 64, .18));
+      border-radius: 50% 10% 50% 10%;
+      animation: leafDrift var(--ld, 16s) var(--dl, 0s) ease-in-out infinite;
+      opacity: 0;
+    }
+
+    .leaf-p::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1px;
+      height: 65%;
+      background: rgba(255, 255, 255, .06);
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes leafDrift {
+      0% {
+        transform: translateY(0) rotate(var(--r0, 0deg)) scale(.8);
+        opacity: 0;
+      }
+
+      8% {
+        opacity: var(--lo, .18);
+      }
+
+      85% {
+        opacity: var(--lo, .18);
+      }
+
+      100% {
+        transform: translateY(calc(-100vh - 60px)) rotate(var(--r1, 360deg)) translateX(var(--dx, 40px)) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    /* LANG BAR */
+    .lang-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px var(--pad);
+      background: linear-gradient(to bottom, rgba(6, 10, 4, .95) 0%, transparent 100%);
+    }
+
+    .logo-mark {
+      font-family: 'Marcellus', serif;
+      font-size: 14px;
+      letter-spacing: .18em;
+      color: var(--reed);
+      opacity: .82;
+      text-transform: uppercase;
+    }
+
+    .lang-pill {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(192, 126, 48, .22);
+      border-radius: 100px;
+      overflow: hidden;
+      background: rgba(6, 10, 4, .72);
+      backdrop-filter: blur(16px);
+      position: relative;
+      padding: 3px;
+    }
+
+    .lang-slider {
+      position: absolute;
+      top: 3px;
+      bottom: 3px;
+      left: 3px;
+      width: calc(50% - 3px);
+      background: var(--amber);
+      border-radius: 100px;
+      transition: transform .4s cubic-bezier(.4, 0, .2, 1);
+      pointer-events: none;
+    }
+
+    body.lang-si .lang-slider {
+      transform: translateX(100%);
+    }
+
+    .lang-btn {
+      background: none;
+      border: none;
+      cursor: none;
+      padding: 7px 18px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(200, 170, 128, .45);
+      transition: color .3s;
+      border-radius: 100px;
+      position: relative;
+      z-index: 1;
+      width: 54px;
+      text-align: center;
+    }
+
+    .lang-btn.active {
+      color: var(--void);
+      font-weight: 700;
+    }
+
+    /* BILINGUAL */
+    .bb {
+      display: grid;
+      grid-template-areas: 'stack';
+    }
+
+    .bb>* {
+      grid-area: stack;
+      transition: opacity .5s ease, filter .5s ease;
+    }
+
+    .bb>.t-en {
+      opacity: 1;
+      filter: blur(0);
+      pointer-events: auto;
+    }
+
+    .bb>.t-si {
+      opacity: 0;
+      filter: blur(6px);
+      pointer-events: none;
+    }
+
+    body.lang-si .bb>.t-en {
+      opacity: 0;
+      filter: blur(6px);
+      pointer-events: none;
+    }
+
+    body.lang-si .bb>.t-si {
+      opacity: 1;
+      filter: blur(0);
+      pointer-events: auto;
+    }
+
+    .bi {
+      display: inline-grid;
+      grid-template-areas: 'stack';
+      vertical-align: top;
+    }
+
+    .bi>* {
+      grid-area: stack;
+      transition: opacity .5s ease, filter .5s ease;
+    }
+
+    .bi>.t-en {
+      opacity: 1;
+      filter: blur(0);
+    }
+
+    .bi>.t-si {
+      opacity: 0;
+      filter: blur(6px);
+    }
+
+    body.lang-si .bi>.t-en {
+      opacity: 0;
+      filter: blur(6px);
+    }
+
+    body.lang-si .bi>.t-si {
+      opacity: 1;
+      filter: blur(0);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 90% 50% at 50% -10%, rgba(40, 70, 28, .6) 0%, transparent 60%), radial-gradient(ellipse 45% 65% at 5% 70%, rgba(30, 56, 64, .4) 0%, transparent 55%), radial-gradient(ellipse 70% 40% at 50% 100%, rgba(34, 26, 12, .9) 0%, transparent 60%), linear-gradient(175deg, #0a0f06 0%, #0c1108 35%, #090d06 70%, #111008 100%);
+    }
+
+    .hero-blob {
+      position: absolute;
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      filter: blur(80px);
+      animation: morphBlob 22s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .blob-1 {
+      width: 650px;
+      height: 500px;
+      background: rgba(42, 68, 34, .14);
+      top: -100px;
+      right: -120px;
+    }
+
+    .blob-2 {
+      width: 420px;
+      height: 380px;
+      background: rgba(30, 56, 64, .1);
+      bottom: 60px;
+      left: -60px;
+      animation-delay: -8s;
+    }
+
+    .blob-3 {
+      width: 300px;
+      height: 280px;
+      background: rgba(120, 62, 24, .06);
+      top: 30%;
+      left: 40%;
+      animation-delay: -14s;
+    }
+
+    @keyframes morphBlob {
+
+      0%,
+      100% {
+        border-radius: 40% 60% 70% 30%/40% 50% 60% 50%;
+        transform: translate(0, 0) scale(1);
+      }
+
+      30% {
+        border-radius: 70% 30% 50% 50%/60% 40% 60% 40%;
+        transform: translate(20px, -15px) scale(1.04);
+      }
+
+      60% {
+        border-radius: 50% 50% 30% 70%/50% 60% 40% 60%;
+        transform: translate(-15px, 20px) scale(.97);
+      }
+    }
+
+    .hero-roots {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      background: linear-gradient(to top, var(--bark) 0%, transparent 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-c {
+      position: relative;
+      z-index: 3;
+      padding: 0 var(--pad) clamp(52px, 9vh, 90px);
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 26px;
+    }
+
+    .hero-eye-line {
+      width: 32px;
+      height: 1px;
+      background: linear-gradient(to right, var(--amber), transparent);
+    }
+
+    .hero-eye-text {
+      font-size: 9px;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    .hero-title {
+      font-family: 'Marcellus', serif;
+      font-size: clamp(64px, 10.5vw, 148px);
+      font-weight: 400;
+      line-height: .88;
+      letter-spacing: -.01em;
+      color: var(--dew);
+      margin-bottom: 22px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--sunray);
+    }
+
+    .hero-names {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .lname {
+      font-family: 'Marcellus', serif;
+      font-size: clamp(19px, 2.6vw, 33px);
+      color: var(--reed);
+      letter-spacing: .05em;
+      line-height: 1.3;
+    }
+
+    .lname-sep {
+      font-family: 'Marcellus', serif;
+      font-size: clamp(15px, 2vw, 24px);
+      color: rgba(192, 126, 48, .35);
+      margin: 0 16px;
+    }
+
+    .hero-village {
+      font-size: 11px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--stone);
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: clamp(28px, 5vh, 50px);
+    }
+
+    .hero-village::before {
+      content: '';
+      width: 14px;
+      height: 1px;
+      background: var(--stone);
+      opacity: .5;
+    }
+
+    .hero-panel {
+      display: flex;
+      align-items: stretch;
+      flex-wrap: wrap;
+      background: rgba(23, 18, 8, .75);
+      backdrop-filter: blur(22px);
+      border: 1px solid rgba(192, 126, 48, .14);
+      border-top: 2px solid rgba(192, 126, 48, .28);
+      max-width: 800px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(92deg, transparent 0px, transparent 40px, rgba(192, 126, 48, .015) 40px, rgba(192, 126, 48, .015) 41px);
+      pointer-events: none;
+    }
+
+    .panel-price {
+      padding: 22px 28px;
+      border-right: 1px solid rgba(192, 126, 48, .12);
+      flex-shrink: 0;
+    }
+
+    .panel-lbl {
+      font-size: 8px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--water);
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .panel-price-val {
+      font-family: 'Marcellus', serif;
+      font-size: clamp(24px, 3.2vw, 42px);
+      color: var(--sunray);
+      line-height: 1;
+      letter-spacing: -.01em;
+    }
+
+    .panel-parcels {
+      display: flex;
+      flex: 1;
+    }
+
+    .panel-parcel {
+      flex: 1;
+      padding: 22px 15px;
+      border-right: 1px solid rgba(192, 126, 48, .08);
+    }
+
+    .panel-parcel:last-child {
+      border-right: none;
+    }
+
+    .parcel-sz {
+      font-family: 'Marcellus', serif;
+      font-size: clamp(17px, 2vw, 24px);
+      color: var(--papyrus);
+      display: block;
+      margin-bottom: 6px;
+      line-height: 1;
+    }
+
+    .parcel-nm {
+      font-size: 10px;
+      letter-spacing: .1em;
+      color: var(--stone);
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .scroll-tell {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+      animation: riseUp 1s 2.2s both;
+    }
+
+    .scroll-tell span {
+      font-size: 8px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    .scroll-stem {
+      width: 1px;
+      height: 46px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      animation: stemPulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes stemPulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+
+      50% {
+        opacity: .28;
+        transform: scaleY(.45);
+      }
+    }
+
+    @keyframes riseUp {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    /* BRANCH DIVIDERS */
+    .branch-div {
+      width: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    /* SECTION EYE */
+    .sec-eye {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 9px;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .sec-eye::before {
+      content: '';
+      width: 8px;
+      height: 13px;
+      background: var(--fern);
+      border-radius: 50% 8% 50% 8%;
+      transform: rotate(-20deg);
+      flex-shrink: 0;
+      opacity: .7;
+    }
+
+    .sec-title {
+      font-family: 'Marcellus', serif;
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--dew);
+    }
+
+    .sec-title em {
+      font-style: italic;
+      color: var(--sunray);
+    }
+
+    /* ABOUT */
+    .about-wrap {
+      padding: clamp(60px, 8vw, 110px) var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: clamp(40px, 6vw, 80px);
+      align-items: start;
+    }
+
+    .about-left {
+      position: sticky;
+      top: 96px;
+    }
+
+    .about-h {
+      font-family: 'Marcellus', serif;
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--dew);
+      margin-bottom: 22px;
+    }
+
+    .about-h em {
+      font-style: italic;
+      color: var(--sunray);
+      display: block;
+    }
+
+    .stream-thread {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 28px 0;
+    }
+
+    .stream-line {
+      flex: 1;
+      height: 2px;
+      max-width: 80px;
+      background: linear-gradient(to right, var(--stream), var(--water), transparent);
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .stream-line::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      width: 12px;
+      height: 6px;
+      background: var(--water);
+      border-radius: 50%;
+      animation: streamFlow 2.8s ease-in-out infinite;
+    }
+
+    @keyframes streamFlow {
+
+      0%,
+      100% {
+        transform: translateX(0);
+        opacity: .8;
+      }
+
+      50% {
+        transform: translateX(50px);
+        opacity: .2;
+      }
+    }
+
+    .stream-label {
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--water);
+      font-weight: 500;
+    }
+
+    .about-body {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding-top: 4px;
+    }
+
+    .about-body p {
+      font-size: 16px;
+      line-height: 2;
+      color: var(--stone);
+      font-weight: 300;
+    }
+
+    .about-body p strong {
+      color: var(--papyrus);
+      font-weight: 500;
+    }
+
+    /* FEATURES */
+    .features-belt {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(255, 255, 255, .04);
+    }
+
+    .feat {
+      padding: clamp(26px, 3vw, 42px) clamp(18px, 2.5vw, 30px);
+      border-right: 1px solid rgba(255, 255, 255, .04);
+      position: relative;
+      overflow: hidden;
+      transition: background .45s;
+    }
+
+    .feat:last-child {
+      border-right: none;
+    }
+
+    .feat::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      background: radial-gradient(circle at top right, rgba(74, 118, 64, .08), transparent 70%);
+      transition: opacity .4s;
+    }
+
+    .feat:hover::before {
+      opacity: 3;
+    }
+
+    .feat-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--fern), var(--leaf), var(--sage));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .5s ease;
+    }
+
+    .feat:hover {
+      background: rgba(42, 68, 34, .07);
+    }
+
+    .feat:hover .feat-bar {
+      transform: scaleX(1);
+    }
+
+    .feat-ico {
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(104, 146, 78, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      margin-bottom: 16px;
+      transition: all .35s;
+    }
+
+    .feat:hover .feat-ico {
+      border-color: rgba(104, 146, 78, .55);
+      background: rgba(42, 68, 34, .15);
+    }
+
+    .feat-name {
+      font-family: 'Marcellus', serif;
+      font-size: 16px;
+      color: var(--papyrus);
+      margin-bottom: 8px;
+    }
+
+    .feat-desc {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--stone);
+      font-weight: 300;
+    }
+
+    /* GALLERY */
+    .gallery-wrap {
+      padding: clamp(60px, 8vw, 110px) var(--pad);
+    }
+
+    .gallery-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .gallery-note {
+      font-size: 12px;
+      color: var(--stone);
+      letter-spacing: .04em;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      margin-bottom: 22px;
+    }
+
+    .gthumb {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: none;
+      background: var(--peat);
+    }
+
+    .gthumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .7s cubic-bezier(.25, .46, .45, .94);
+    }
+
+    .gthumb:hover img {
+      transform: scale(1.07);
+    }
+
+    .gthumb-ov {
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 10, 4, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .4s;
+      z-index: 1;
+    }
+
+    .gthumb:hover .gthumb-ov {
+      background: rgba(6, 10, 4, .45);
+    }
+
+    .gthumb-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(192, 126, 48, .9);
+      border: none;
+      cursor: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--void);
+      transform: scale(.4);
+      opacity: 0;
+      transition: transform .3s, opacity .3s;
+    }
+
+    .gthumb:hover .gthumb-btn {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .gallery-open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 0 auto;
+      background: none;
+      border: 1px solid rgba(192, 126, 48, .28);
+      color: var(--amber);
+      padding: 13px 44px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 10px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      cursor: none;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .35s, letter-spacing .35s;
+    }
+
+    .gallery-open::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(192, 126, 48, .05);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .35s;
+    }
+
+    .gallery-open:hover {
+      border-color: rgba(192, 126, 48, .6);
+      letter-spacing: .34em;
+    }
+
+    .gallery-open:hover::before {
+      transform: scaleX(1);
+    }
+
+    /* GALLERY MODAL */
+    .gm {
+      position: fixed;
+      inset: 0;
+      z-index: 2100;
+      background: rgba(4, 6, 3, .97);
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s;
+      backdrop-filter: blur(24px);
+    }
+
+    .gm.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .gm-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 28px;
+      border-bottom: 1px solid rgba(192, 126, 48, .1);
+      flex-shrink: 0;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .gm-ttl {
+      font-family: 'Marcellus', serif;
+      font-size: 17px;
+      color: var(--papyrus);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .gm-ct {
+      font-size: 10px;
+      letter-spacing: .18em;
+      color: var(--stone);
+    }
+
+    .gm-fltrs {
+      display: flex;
+      gap: 5px;
+    }
+
+    .gm-fb {
+      background: none;
+      border: 1px solid rgba(192, 126, 48, .18);
+      color: var(--stone);
+      padding: 6px 16px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 9px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      cursor: none;
+      transition: all .3s;
+    }
+
+    .gm-fb.on {
+      background: rgba(192, 126, 48, .1);
+      border-color: rgba(192, 126, 48, .5);
+      color: var(--amber);
+    }
+
+    .gm-fb:hover:not(.on) {
+      border-color: rgba(192, 126, 48, .32);
+      color: var(--reed);
+    }
+
+    .gm-x {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, .1);
+      color: var(--papyrus);
+      width: 40px;
+      height: 40px;
+      cursor: none;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .3s;
+      font-family: inherit;
+      flex-shrink: 0;
+    }
+
+    .gm-x:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+      transform: rotate(90deg);
+    }
+
+    .gm-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px 28px;
+    }
+
+    .gm-body::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .gm-body::-webkit-scrollbar-thumb {
+      background: rgba(192, 126, 48, .2);
+      border-radius: 2px;
+    }
+
+    .gm-grid {
+      columns: 3;
+      column-gap: 5px;
+    }
+
+    .gm-it {
+      break-inside: avoid;
+      margin-bottom: 5px;
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+      background: var(--peat);
+    }
+
+    .gm-it img,
+    .gm-it video {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform .5s;
+      min-height: 80px;
+    }
+
+    .gm-it:hover img,
+    .gm-it:hover video {
+      transform: scale(1.04);
+    }
+
+    .gm-it-ov {
+      position: absolute;
+      inset: 0;
+      background: rgba(6, 10, 4, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .35s;
+      z-index: 1;
+    }
+
+    .gm-it:hover .gm-it-ov {
+      background: rgba(6, 10, 4, .42);
+    }
+
+    .gm-it-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(192, 126, 48, .9);
+      border: none;
+      cursor: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--void);
+      transform: scale(.4);
+      opacity: 0;
+      transition: transform .3s, opacity .3s;
+    }
+
+    .gm-it:hover .gm-it-btn {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .gm-vid-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(6, 10, 4, .78);
+      border: 1px solid rgba(192, 126, 48, .28);
+      padding: 3px 8px;
+      font-size: 7px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      z-index: 2;
+    }
+
+    .gm-empty {
+      padding: 80px;
+      text-align: center;
+      color: var(--stone);
+      font-size: 13px;
+    }
+
+    /* LIGHTBOX */
+    .lb {
+      position: fixed;
+      inset: 0;
+      z-index: 2200;
+      background: rgba(3, 5, 2, .98);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+      backdrop-filter: blur(20px);
+    }
+
+    .lb.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lb-inner {
+      max-width: 90vw;
+      max-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lb-img {
+      max-width: 88vw;
+      max-height: 86vh;
+      object-fit: contain;
+      border: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .lb-vid {
+      max-width: 88vw;
+      max-height: 86vh;
+      outline: none;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .lb-btn {
+      position: fixed;
+      background: none;
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: var(--papyrus);
+      cursor: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .3s;
+    }
+
+    .lb-btn:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .lb-close {
+      top: 20px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      font-size: 15px;
+      z-index: 10;
+    }
+
+    .lb-close:hover {
+      transform: rotate(90deg);
+    }
+
+    .lb-prev,
+    .lb-next {
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      font-size: 20px;
+      z-index: 10;
+    }
+
+    .lb-prev {
+      left: 16px;
+    }
+
+    .lb-prev:hover {
+      transform: translateY(-50%) translateX(-3px);
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .lb-next {
+      right: 16px;
+    }
+
+    .lb-next:hover {
+      transform: translateY(-50%) translateX(3px);
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+    .lb-cnt {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Marcellus', serif;
+      font-size: 13px;
+      color: var(--stone);
+      letter-spacing: .12em;
+      white-space: nowrap;
+    }
+
+    /* LOCATION */
+    .loc-wrap {
+      padding: clamp(60px, 8vw, 110px) var(--pad);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 6vw, 80px);
+      align-items: start;
+    }
+
+    .addr-table {
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, .05);
+    }
+
+    .addr-row {
+      display: grid;
+      grid-template-columns: 168px 1fr;
+      gap: 14px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, .04);
+      transition: border-color .3s;
+    }
+
+    .addr-row:hover {
+      border-bottom-color: rgba(192, 126, 48, .18);
+    }
+
+    .addr-k {
+      font-size: 9px;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--water);
+      font-weight: 600;
+      padding-top: 2px;
+    }
+
+    .addr-v {
+      font-size: 14px;
+      color: var(--papyrus);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .map-holder {
+      margin-top: 30px;
+    }
+
+    .map-box {
+      border: 1px solid rgba(192, 126, 48, .16);
+      background: var(--peat);
+      overflow: hidden;
+      position: relative;
+      height: 410px;
+    }
+
+    .map-box::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(192, 126, 48, .08);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .map-svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .map-pin-label {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      z-index: 4;
+      background: rgba(6, 10, 4, .84);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(192, 126, 48, .2);
+      padding: 7px 12px;
+      font-size: 8px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      pointer-events: none;
+    }
+
+    .map-open-btn {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      z-index: 5;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(6, 10, 4, .86);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(192, 126, 48, .28);
+      padding: 8px 14px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 8px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+      cursor: none;
+      transition: all .3s;
+    }
+
+    .map-open-btn:hover {
+      background: rgba(192, 126, 48, .1);
+      border-color: rgba(192, 126, 48, .55);
+    }
+
+    /* DOCUMENTS */
+    .docs-wrap {
+      padding: clamp(60px, 8vw, 110px) var(--pad);
+    }
+
+    .docs-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .docs-hint {
+      font-size: 12px;
+      color: var(--stone);
+      letter-spacing: .04em;
+    }
+
+    .folders {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .folder {
+      border: 1px solid rgba(255, 255, 255, .06);
+      background: var(--bark);
+      overflow: hidden;
+      transition: border-color .3s;
+    }
+
+    .folder:hover {
+      border-color: rgba(192, 126, 48, .18);
+    }
+
+    .folder-tab {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px 20px;
+      cursor: none;
+      background: rgba(255, 255, 255, .02);
+      transition: background .3s;
+      user-select: none;
+    }
+
+    .folder-tab:hover {
+      background: rgba(42, 68, 34, .1);
+    }
+
+    .folder-leaf {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border: 1px solid rgba(104, 146, 78, .22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      transition: all .3s;
+    }
+
+    .folder:hover .folder-leaf {
+      border-color: rgba(104, 146, 78, .5);
+      background: rgba(42, 68, 34, .2);
+    }
+
+    .folder-name {
+      font-family: 'Marcellus', serif;
+      font-size: 17px;
+      color: var(--papyrus);
+      flex: 1;
+    }
+
+    .folder-count {
+      font-size: 9px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    .folder-arrow {
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(255, 255, 255, .07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      color: var(--stone);
+      transition: transform .38s ease, border-color .3s, color .3s;
+      flex-shrink: 0;
+    }
+
+    .folder.open .folder-arrow {
+      transform: rotate(90deg);
+      border-color: rgba(192, 126, 48, .3);
+      color: var(--amber);
+    }
+
+    .folder-body {
+      display: none;
+      padding: 8px;
+      border-top: 1px solid rgba(255, 255, 255, .04);
+      background: rgba(6, 10, 4, .3);
+    }
+
+    .folder.open .folder-body {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .folder-empty {
+      width: 100%;
+      padding: 22px;
+      text-align: center;
+      font-size: 12px;
+      font-style: italic;
+      color: var(--earth);
+      letter-spacing: .06em;
+      border: 1px dashed rgba(255, 255, 255, .05);
+    }
+
+    .doc-card {
+      flex: 1;
+      min-width: 190px;
+      background: rgba(255, 255, 255, .025);
+      border: 1px solid rgba(255, 255, 255, .06);
+      padding: 18px 16px 14px;
+      cursor: none;
+      transition: all .35s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .doc-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(192, 126, 48, .07), transparent 55%);
+      opacity: 0;
+      transition: opacity .35s;
+    }
+
+    .doc-card:hover {
+      border-color: rgba(192, 126, 48, .3);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 44px rgba(0, 0, 0, .45);
+    }
+
+    .doc-card:hover::before {
+      opacity: 1;
+    }
+
+    .doc-n {
+      font-family: 'Marcellus', serif;
+      font-size: 26px;
+      color: rgba(192, 126, 48, .08);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .doc-fi {
+      width: 24px;
+      height: 32px;
+      border: 1px solid rgba(192, 126, 48, .24);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2px;
+      position: relative;
+      margin-bottom: 10px;
+    }
+
+    .doc-fi::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 5px 5px 0;
+      border-color: transparent rgba(192, 126, 48, .38) transparent transparent;
+    }
+
+    .doc-fi-l {
+      font-size: 6px;
+      letter-spacing: .1em;
+      color: var(--amber);
+    }
+
+    .doc-ttl {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--papyrus);
+      margin-bottom: 2px;
+      line-height: 1.3;
+    }
+
+    .doc-act {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 8px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      opacity: 0;
+      transform: translateY(3px);
+      transition: opacity .3s, transform .3s;
+    }
+
+    .doc-card:hover .doc-act {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* PDF MODAL */
+    .pm {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(4, 6, 3, .97);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s;
+      backdrop-filter: blur(18px);
+      padding: 20px;
+    }
+
+    .pm.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .pm-box {
+      background: var(--peat);
+      width: 100%;
+      max-width: 960px;
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(192, 126, 48, .14);
+      overflow: hidden;
+    }
+
+    .pm-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 22px;
+      background: rgba(192, 126, 48, .04);
+      border-bottom: 1px solid rgba(192, 126, 48, .1);
+      flex-shrink: 0;
+    }
+
+    .pm-ttl {
+      font-family: 'Marcellus', serif;
+      font-size: 16px;
+      color: var(--papyrus);
+    }
+
+    .pm-acts {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .pm-btn {
+      background: none;
+      cursor: none;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .3s;
+    }
+
+    .pm-ext {
+      border: 1px solid rgba(192, 126, 48, .25);
+      color: var(--amber);
+    }
+
+    .pm-ext:hover {
+      border-color: var(--amber);
+      background: rgba(192, 126, 48, .08);
+    }
+
+    .pm-cls {
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: var(--papyrus);
+    }
+
+    .pm-cls:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+      transform: rotate(90deg);
+    }
+
+    .pm-body {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .pm-body iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 68vh;
+      border: none;
+      background: var(--dew);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: clamp(56px, 7vw, 86px) var(--pad) clamp(32px, 4vw, 48px);
+      border-top: 1px solid rgba(255, 255, 255, .05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(104, 146, 78, .3), transparent);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(36px, 5vw, 72px);
+      margin-bottom: clamp(36px, 5vw, 56px);
+    }
+
+    .ft-brand {
+      font-family: 'Marcellus', serif;
+      font-size: clamp(28px, 3.8vw, 50px);
+      font-weight: 400;
+      color: var(--dew);
+      line-height: .92;
+      margin-bottom: 8px;
+      letter-spacing: -.01em;
+    }
+
+    .ft-brand em {
+      display: block;
+      font-style: italic;
+      color: var(--sunray);
+    }
+
+    .ft-sub {
+      font-size: 13px;
+      color: var(--stone);
+      letter-spacing: .05em;
+      margin-bottom: 24px;
+    }
+
+    .ft-badge {
+      display: inline-block;
+      border: 1px solid rgba(192, 126, 48, .28);
+      padding: 9px 16px;
+      font-family: 'Marcellus', serif;
+      font-size: 19px;
+      color: var(--sunray);
+    }
+
+    .ft-desc {
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--stone);
+      font-weight: 300;
+    }
+
+    .ft-bot {
+      padding-top: 26px;
+      border-top: 1px solid rgba(255, 255, 255, .04);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ft-copy {
+      font-size: 10px;
+      color: rgba(138, 110, 80, .3);
+      letter-spacing: .1em;
+    }
+
+    .ft-status {
+      font-size: 9px;
+      color: rgba(138, 110, 80, .22);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .enquire-btn {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      z-index: 400;
+      background: var(--amber);
+      color: var(--void);
+      padding: 13px 24px;
+      border: none;
+      font-family: 'Nunito', sans-serif;
+      font-size: 10px;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor: none;
+      box-shadow: 0 6px 28px rgba(0, 0, 0, .55), 0 2px 6px rgba(192, 126, 48, .25);
+      transition: all .3s;
+      animation: floatUp 1s 2.5s both;
+    }
+
+    .enquire-btn:hover {
+      background: var(--honey);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(0, 0, 0, .6), 0 3px 10px rgba(192, 126, 48, .35);
+    }
+
+    @keyframes floatUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .rv {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .rv.vis {
+      opacity: 1;
+      transform: none;
+    }
+
+    .d1 {
+      transition-delay: .08s;
+    }
+
+    .d2 {
+      transition-delay: .16s;
+    }
+
+    .d3 {
+      transition-delay: .24s;
+    }
+
+    .d4 {
+      transition-delay: .32s;
+    }
+
+    @media(max-width:1100px) {
+      .features-belt {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gm-grid {
+        columns: 2;
+      }
+    }
+
+    @media(max-width:900px) {
+      .about-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .about-left {
+        position: static;
+      }
+
+      .loc-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:768px) {
+      .hero-panel {
+        flex-direction: column;
+      }
+
+      .panel-price {
+        border-right: none;
+        border-bottom: 1px solid rgba(192, 126, 48, .12);
+      }
+
+      .panel-parcels {
+        flex-wrap: wrap;
+      }
+
+      .panel-parcel {
+        flex-basis: 50%;
+      }
+
+      .features-belt {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gm-grid {
+        columns: 2;
+      }
+
+      .gm-head {
+        padding: 14px 16px;
+      }
+
+      .gm-body {
+        padding: 14px 16px;
+      }
+
+      .addr-row {
+        grid-template-columns: 130px 1fr;
+      }
+
+      .doc-card {
+        min-width: 155px;
+      }
+
+      .ft-bot {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+    }
+
+    @media(max-width:520px) {
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .gm-grid {
+        columns: 1;
+      }
+
+      .features-belt {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="cur" id="cur" aria-hidden="true"></div>
+  <div class="cur-ring" id="curRing" aria-hidden="true"></div>
+
+  <nav class="lang-bar" aria-label="Language selector">
+    <div class="logo-mark">Kottawa Land</div>
+    <div class="lang-pill" role="group">
+      <div class="lang-slider" id="langSlider" aria-hidden="true"></div>
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')" aria-pressed="true">EN</button>
+      <button class="lang-btn" id="btn-si" onclick="setLang('si')" aria-pressed="false">සිං</button>
+    </div>
+  </nav>
+
+  <section class="hero" id="main" aria-label="Property overview">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-blob blob-1"></div>
+      <div class="hero-blob blob-2"></div>
+      <div class="hero-blob blob-3"></div>
+    </div>
+    <div class="leaves-wrap" id="leavesWrap" aria-hidden="true"></div>
+    <div class="hero-roots" aria-hidden="true"></div>
+
+    <div class="hero-c">
+      <div class="hero-eyebrow">
+        <div class="hero-eye-line"></div>
+        <div class="hero-eye-text bb"><span class="t-en">Land for Sale · Galle District, Sri Lanka</span><span
+            class="t-si">ඉඩම් විකිණීමට · ගාල්ල දිස්ත්‍රිකය, ශ්‍රී ලංකාව</span></div>
+      </div>
+      <h1 class="hero-title bb"><span class="t-en">Kottawa<br><em>Land</em></span><span
+          class="t-si">කොට්ටව<br><em>ඉඩම</em></span></h1>
+      <div class="hero-names bb">
+        <span class="t-en"><span class="lname">Mana Nadula</span><span class="lname-sep">&amp;</span><span
+            class="lname">Pahala Deniya Goda</span></span>
+        <span class="t-si"><span class="lname">මානා නදුල</span><span class="lname-sep">සහ</span><span class="lname">පහල
+            දෙනිය ගොඩ</span></span>
+      </div>
+      <div class="hero-village bb"><span class="t-en">Yakkalamulla · Kottawa · Galle District</span><span
+          class="t-si">යක්කලමුල්ල · කොට්ටව · ගාල්ල දිස්ත්‍රිකය</span></div>
+      <div class="hero-panel" role="list">
+        <div class="panel-price" role="listitem">
+          <span class="panel-lbl bb"><span class="t-en">Asking Price</span><span class="t-si">මිල</span></span>
+          <span class="panel-price-val">Rs. 40,000,000</span>
+        </div>
+        <div class="panel-parcels">
+          <div class="panel-parcel" role="listitem"><span class="parcel-sz">03A 15.5P</span><span
+              class="parcel-nm bb"><span class="t-en">Mana Nadula</span><span class="t-si">මානා නදුල</span></span></div>
+          <div class="panel-parcel" role="listitem"><span class="parcel-sz">03A 14P</span><span
+              class="parcel-nm bb"><span class="t-en">Pahala Deniya Goda</span><span class="t-si">පහල දෙනිය
+                ගොඩ</span></span></div>
+          <div class="panel-parcel" role="listitem"><span class="parcel-sz">15 km</span><span class="parcel-nm bb"><span
+                class="t-en">From Expressway</span><span class="t-si">අධිවේගී සිට</span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-tell" aria-hidden="true">
+      <div class="scroll-stem"></div>
+      <span class="bb" style="font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--stone);"><span
+          class="t-en">Scroll</span><span class="t-si">පහළට</span></span>
+    </div>
+  </section>
+
+  <!-- Branch divider 1 -->
+  <svg class="branch-div" viewBox="0 0 1440 32" preserveAspectRatio="none" style="width:100%;height:32px;"
+    aria-hidden="true">
+    <path
+      d="M0,16 C80,8 160,22 240,14 C320,6 400,20 480,16 C560,12 640,22 720,16 C800,10 880,24 960,16 C1040,8 1120,20 1200,14 C1280,8 1360,18 1440,16"
+      fill="none" stroke="rgba(42,68,34,.3)" stroke-width="1.5" />
+    <ellipse cx="240" cy="14" rx="5" ry="8" fill="rgba(74,118,64,.2)" transform="rotate(-20,240,14)" />
+    <ellipse cx="480" cy="16" rx="4" ry="7" fill="rgba(74,118,64,.18)" transform="rotate(15,480,16)" />
+    <ellipse cx="720" cy="16" rx="6" ry="9" fill="rgba(74,118,64,.22)" transform="rotate(-10,720,16)" />
+    <ellipse cx="960" cy="16" rx="4" ry="7" fill="rgba(74,118,64,.16)" transform="rotate(20,960,16)" />
+    <ellipse cx="1200" cy="14" rx="5" ry="8" fill="rgba(74,118,64,.2)" transform="rotate(-15,1200,14)" />
+  </svg>
+
+  <!-- <section class="about-wrap" id="about" aria-labelledby="about-h">
+    <div class="about-left rv">
+      <div class="sec-eye"><span class="bi"><span class="t-en">About the Land</span><span class="t-si">ඉඩම
+            ගැන</span></span></div>
+      <h2 class="about-h bb" id="about-h">
+        <span class="t-en">Where stream,<br>stone &amp; forest<br><em>meet</em></span>
+        <span class="t-si">ස්වාභාවික<br>සම්පත් සහිත<br><em>කදිම ඉඩමකි</em></span>
+      </h2>
+      <div class="stream-thread" aria-hidden="true">
+        <div class="stream-line"></div>
+        <span class="stream-label bb"><span class="t-en">Natural stream flows through</span><span class="t-si">ස්වාභාවික
+            දොළ ගලයි</span></span>
+      </div>
+    </div>
+    <div class="about-body">
+      <div class="bb rv d1">
+        <p class="t-en">A natural stream flows through the <strong>heart of this land</strong>, making a living border between two pieces of untouched forest. </p>
+        <p class="t-si">ස්වාභාවික දොළ පහරක් <strong>ඉඩම මැදින්</strong> ගලා බසී.</p>
+        <p class="t-si">සංචාරක කර්මාන්තයට, ආරණ්‍ය සේනාංසයකට, හෝ ඔසු උයනකට සුදුසු ඉඩමකි. <strong>ඉඩම මැදින් දොළ
+            පහරක්</strong> ගලා බසී. නිරවුල් ඔප්පු හා අනුමත සැලසුම් ලැබෙනු ඇත.</p>
+      </div>
+      <div class="bb rv d2">
+        <p class="t-en">About <strong>one acre of cinnamon</strong> is already under cultivation. The remainder is
+          pristine forest with dramatic rock formations and no existing constructions — a truly untouched canvas.</p>
+        <p class="t-si">කුරුඳු <strong>අක්කරයක් පමණ</strong> දැනට වගා කෙරේ. ඉතිරිය ස්වාභාවික ගල් මාලා සහ කැළෑ ඉඩමකි.
+          ඉදිකිරීම් නොමැත.</p>
+      </div>
+      <div class="bb rv d3">
+        <p class="t-en">Located <strong>15 km from the Galle Pinnaduwa Expressway</strong> via Udugama Road — with a
+          carpet road reaching all the way to the land boundary. A rare opportunity for eco-tourism, a forest retreat,
+          or a private estate.</p>
+        <p class="t-si"><strong>ගාල්ල පින්නදූව අධිවේගී</strong> සිට කිලෝ 15ක් — ඉඩම දක්වාම කාපට් රාස්තාව ඇත.</p>
+      </div>
+    </div>
+  </section> -->
+
+  <div class="features-belt" aria-label="Key features" role="list">
+    <div class="feat rv" role="listitem">
+      <div class="feat-bar"></div>
+      <div class="feat-ico">💧</div>
+      <div class="feat-name bb"><span class="t-en">Natural Stream</span><span class="t-si">ස්වාභාවික දොළක්</span></div>
+      <div class="feat-desc bb"><span class="t-en">Flows through the centre, a living border between both
+          parcels</span><span class="t-si">ඉඩම කොටස් දෙකකට වෙන් කරමින් ඉඩම මැදින් ගලා යයි.</span></div>
+    </div>
+    <div class="feat rv d1" role="listitem">
+      <div class="feat-bar"></div>
+      <div class="feat-ico">🛣️</div>
+      <div class="feat-name bb"><span class="t-en">Carpet Road Access</span><span class="t-si">කාපට් මාර්ගය</span></div>
+      <div class="feat-desc bb"><span class="t-en">Paved road leads directly to the land — no off-road
+          required</span><span class="t-si">ඉඩම දක්වාම කාපට් මාර්ගය තිබේ.</span></div>
+    </div>
+    <div class="feat rv d2" role="listitem">
+      <div class="feat-bar"></div>
+      <div class="feat-ico">📜</div>
+      <div class="feat-name bb"><span class="t-en">Clear Title Deeds</span><span class="t-si">නිරවුල් ඔප්පු</span></div>
+      <div class="feat-desc bb"><span class="t-en">Registered deeds and government-approved survey plans fully in
+          order</span><span class="t-si">ලියාපදිංචි ඔප්පු හා අනුමත මිනින්දෝරු සැලසුම්</span></div>
+    </div>
+    <div class="feat rv d3" role="listitem">
+      <div class="feat-bar"></div>
+      <div class="feat-ico">🌿</div>
+      <div class="feat-name bb"><span class="t-en">Cinnamon ~1 Acre</span><span class="t-si">කුරුඳු ~ අක්කරයක්</span>
+      </div>
+      <div class="feat-desc bb"><span class="t-en">Existing cinnamon cultivation; rest is natural forest with rock
+          formations</span><span class="t-si">කුරුඳු වගාව සහ ඉතිරිය ස්වාභාවික කැළෑව</span></div>
+    </div>
+  </div>
+
+  <!-- Branch divider 2 -->
+  <svg class="branch-div" viewBox="0 0 1440 32" preserveAspectRatio="none" style="width:100%;height:32px;"
+    aria-hidden="true">
+    <path d="M0,16 C120,22 240,10 360,18 C480,26 600,8 720,16 C840,24 960,10 1080,18 C1200,26 1320,12 1440,16"
+      fill="none" stroke="rgba(42,68,34,.25)" stroke-width="1" />
+    <ellipse cx="360" cy="18" rx="4" ry="6" fill="rgba(74,118,64,.18)" transform="rotate(25,360,18)" />
+    <ellipse cx="720" cy="16" rx="5" ry="8" fill="rgba(74,118,64,.2)" transform="rotate(-18,720,16)" />
+    <ellipse cx="1080" cy="18" rx="4" ry="6" fill="rgba(74,118,64,.16)" transform="rotate(22,1080,18)" />
+  </svg>
+
+  <section class="gallery-wrap" id="gallery" aria-labelledby="gal-h">
+    <div class="gallery-hdr rv">
+      <div>
+        <div class="sec-eye"><span class="bi"><span class="t-en">Photography</span><span
+              class="t-si">ඡායාරූප</span></span></div>
+        <h2 class="sec-title bb" id="gal-h"><span class="t-en">Views of the <em>Land</em></span><span class="t-si">ඉඩමේ
+            <em>දසුන්</em></span></h2>
+      </div>
+      <div class="gallery-note bb rv d2"><span class="t-en" id="galNoteEn"></span><span class="t-si"
+          id="galNoteSi"></span></div>
+    </div>
+    <div class="gallery-grid rv" id="galPreview" aria-label="Photo preview"></div>
+    <div style="display:flex;justify-content:center;" class="rv d2">
+      <button class="gallery-open" onclick="gmOpen()" aria-expanded="false" aria-controls="galModal">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+        </svg>
+        <span class="bb" style="display:inline-grid;"><span class="t-en" id="galBtnEn">Open Full Gallery</span><span
+            class="t-si" id="galBtnSi">සම්පූර්ණ ගැලරිය</span></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Branch divider 3 -->
+  <svg class="branch-div" viewBox="0 0 1440 32" preserveAspectRatio="none" style="width:100%;height:32px;"
+    aria-hidden="true">
+    <path
+      d="M0,16 C100,10 200,22 300,14 C400,6 500,24 600,16 C700,8 800,22 900,14 C1000,6 1100,20 1200,16 C1300,12 1380,20 1440,16"
+      fill="none" stroke="rgba(42,68,34,.22)" stroke-width="1.2" />
+    <ellipse cx="300" cy="14" rx="5" ry="7" fill="rgba(74,118,64,.17)" transform="rotate(-12,300,14)" />
+    <ellipse cx="600" cy="16" rx="4" ry="6" fill="rgba(74,118,64,.15)" transform="rotate(18,600,16)" />
+    <ellipse cx="900" cy="14" rx="5" ry="8" fill="rgba(74,118,64,.19)" transform="rotate(-22,900,14)" />
+    <ellipse cx="1200" cy="16" rx="4" ry="6" fill="rgba(74,118,64,.15)" transform="rotate(14,1200,16)" />
+  </svg>
+
+  <section class="loc-wrap" id="location" aria-labelledby="loc-h">
+    <div class="rv">
+      <div class="sec-eye"><span class="bi"><span class="t-en">Location</span><span class="t-si">ස්ථානය</span></span>
+      </div>
+      <h2 class="sec-title bb" id="loc-h"><span class="t-en">Galle District,<br><em>Yakkalamulla</em></span><span
+          class="t-si">ගාල්ල දිස්ත්‍රික්කය,<br><em>යක්කලමුල්ල</em></span></h2>
+      <div class="addr-table" role="list">
+        <div class="addr-row" role="listitem">
+          <div class="addr-k bb"><span class="t-en">Lot No.</span><span class="t-si">අංකය</span></div>
+          <div class="addr-v">177B</div>
+        </div>
+        <div class="addr-row" role="listitem">
+          <div class="addr-k bb"><span class="t-en">Village</span><span class="t-si">ගම</span></div>
+          <div class="addr-v bb"><span class="t-en">Kottawa</span><span class="t-si">කොට්ටව</span></div>
+        </div>
+        <div class="addr-row" role="listitem">
+          <div class="addr-k bb"><span class="t-en">Grama Niladhari</span><span class="t-si">ග්‍රාම නිලාධාරී</span>
+          </div>
+          <div class="addr-v bb"><span class="t-en">Nawala Division</span><span class="t-si">නාවල කොට්ඨාශය</span></div>
+        </div>
+        <div class="addr-row" role="listitem">
+          <div class="addr-k bb"><span class="t-en">Pradeshiya Sabha</span><span class="t-si">ප්‍රාදේශීය සභාව</span>
+          </div>
+          <div class="addr-v bb"><span class="t-en">Yakkalamulla</span><span class="t-si">යක්කලමුල්ල</span></div>
+        </div>
+        <div class="addr-row" role="listitem">
+          <div class="addr-k bb"><span class="t-en">Divisional Secretariat</span><span class="t-si">ප්‍රාදේශීය
+              ලේකම්</span></div>
+          <div class="addr-v bb"><span class="t-en">Yakkalamulla</span><span class="t-si">යක්කලමුල්ල</span></div>
+        </div>
+        <div class="addr-row" role="listitem">
+          <div class="addr-k bb"><span class="t-en">District</span><span class="t-si">දිස්ත්‍රික්කය</span></div>
+          <div class="addr-v bb"><span class="t-en">Galle</span><span class="t-si">ගාල්ල</span></div>
+        </div>
+        <div class="addr-row" role="listitem">
+          <div class="addr-k bb"><span class="t-en">Nearest Landmark</span><span class="t-si">සමීපතම ස්ථානය</span></div>
+          <div class="addr-v bb"><span class="t-en">Road to Seethala Dola Aranya Senasana</span><span class="t-si">සීතල
+              දොළ අරණ්‍ය සේනාසනය දෙසට</span></div>
+        </div>
+        <div class="addr-row" role="listitem">
+          <div class="addr-k bb"><span class="t-en">Distance to Land</span><span class="t-si">ඉඩමට දුර</span></div>
+          <div class="addr-v bb"><span class="t-en">15 km from Galle Pinnaduwa Expressway via Udugama Road</span><span
+              class="t-si">ගාල්ල පින්නදූව සිට කිලෝ 15 — උඩුගම මාර්ගය</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="rv d2">
+      <div class="sec-eye"><span class="bi"><span class="t-en">Map</span><span class="t-si">සිතියම</span></span></div>
+      <h2 class="sec-title bb"><span class="t-en">Find the <em>Property</em></span><span class="t-si">දේපළ <em>සොයා
+            ගන්න</em></span></h2>
+      <div class="map-holder">
+        <div class="map-box" aria-label="Property location map">
+          <svg class="map-svg" viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg"
+            preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <radialGradient id="mb" cx="50%" cy="50%" r="70%">
+                <stop offset="0%" stop-color="#1a160c" />
+                <stop offset="100%" stop-color="#0c0a06" />
+              </radialGradient>
+              <filter id="gl">
+                <feGaussianBlur stdDeviation="2.5" result="b" />
+                <feMerge>
+                  <feMergeNode in="b" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="sgl">
+                <feGaussianBlur stdDeviation="4" result="b" />
+                <feMerge>
+                  <feMergeNode in="b" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <pattern id="mg" width="28" height="28" patternUnits="userSpaceOnUse">
+                <path d="M28 0L0 0 0 28" fill="none" stroke="rgba(192,126,48,.04)" stroke-width=".5" />
+              </pattern>
+            </defs>
+            <rect width="640" height="480" fill="url(#mb)" />
+            <rect width="640" height="480" fill="url(#mg)" />
+            <ellipse cx="320" cy="240" rx="260" ry="190" fill="rgba(42,68,34,.08)" />
+            <ellipse cx="200" cy="300" rx="120" ry="90" fill="rgba(42,68,34,.1)" />
+            <ellipse cx="320" cy="248" rx="90" ry="64" fill="none" stroke="rgba(192,126,48,.07)" stroke-width="1" />
+            <ellipse cx="320" cy="248" rx="70" ry="50" fill="none" stroke="rgba(192,126,48,.1)" stroke-width="1" />
+            <ellipse cx="320" cy="248" rx="50" ry="36" fill="rgba(42,68,34,.14)" stroke="rgba(192,126,48,.15)"
+              stroke-width="1" />
+            <path d="M60 390 Q180 330 290 270 Q380 220 520 145" fill="none" stroke="rgba(138,110,80,.35)"
+              stroke-width="5" stroke-linecap="round" />
+            <path d="M60 390 Q180 330 290 270 Q380 220 520 145" fill="none" stroke="rgba(192,126,48,.18)"
+              stroke-width="1.5" stroke-linecap="round" />
+            <path d="M290 270 Q308 260 320 248" fill="none" stroke="rgba(138,110,80,.3)" stroke-width="3"
+              stroke-dasharray="6 3" />
+            <path d="M290 270 Q308 260 320 248" fill="none" stroke="rgba(192,126,48,.22)" stroke-width="1"
+              stroke-dasharray="6 3" />
+            <path d="M30 450 L610 440" fill="none" stroke="rgba(44,84,100,.3)" stroke-width="6"
+              stroke-linecap="round" />
+            <path d="M30 450 L610 440" fill="none" stroke="rgba(74,128,152,.35)" stroke-width="1"
+              stroke-dasharray="12 8" />
+            <path d="M298 210 Q310 232 320 248 Q330 264 338 285" fill="none" stroke="rgba(44,84,100,.55)"
+              stroke-width="2.5" stroke-linecap="round" />
+            <path d="M298 210 Q310 232 320 248 Q330 264 338 285" fill="none" stroke="rgba(74,128,152,.3)"
+              stroke-width="1" stroke-linecap="round" />
+            <g fill="rgba(74,118,64,.18)">
+              <circle cx="270" cy="225" r="14" />
+              <circle cx="250" cy="255" r="10" />
+              <circle cx="360" cy="215" r="12" />
+              <circle cx="375" cy="245" r="9" />
+              <circle cx="345" cy="285" r="11" />
+              <circle cx="295" cy="290" r="13" />
+            </g>
+            <g filter="url(#sgl)">
+              <circle cx="95" cy="412" r="18" fill="rgba(192,126,48,.07)" stroke="rgba(192,126,48,.2)"
+                stroke-width="1" />
+              <circle cx="95" cy="412" r="5" fill="rgba(192,126,48,.55)" />
+            </g>
+            <text x="118" y="410" font-family="sans-serif" font-size="9" fill="rgba(200,170,128,.7)"
+              letter-spacing="2">GALLE</text>
+            <text x="118" y="421" font-family="sans-serif" font-size="7" fill="rgba(138,110,80,.45)"
+              letter-spacing="1.5">CITY</text>
+            <g transform="translate(360,443)">
+              <rect x="-46" y="-9" width="92" height="15" rx="2" fill="rgba(8,14,24,.7)" stroke="rgba(44,84,100,.35)"
+                stroke-width=".8" /><text x="0" y="2" font-family="sans-serif" font-size="7.5"
+                fill="rgba(74,128,152,.75)" letter-spacing="1.8" text-anchor="middle">SOUTHERN EXPRESSWAY</text>
+            </g>
+            <circle cx="540" cy="440" r="4" fill="rgba(44,84,100,.6)" stroke="rgba(74,128,152,.4)" stroke-width="1" />
+            <text x="525" y="432" font-family="sans-serif" font-size="7" fill="rgba(74,128,152,.55)"
+              letter-spacing="1.2" text-anchor="middle">PINNADUWA</text>
+            <g transform="translate(480,180)">
+              <ellipse cx="0" cy="0" rx="38" ry="26" fill="rgba(42,68,34,.22)" stroke="rgba(74,118,64,.3)"
+                stroke-width="1" /><text x="0" y="-6" font-family="sans-serif" font-size="6.5" fill="rgba(74,118,64,.7)"
+                letter-spacing="1.2" text-anchor="middle">KOTTAWA</text><text x="0" y="5" font-family="sans-serif"
+                font-size="6" fill="rgba(74,118,64,.55)" letter-spacing="1" text-anchor="middle">FOREST RESERVE</text>
+            </g>
+            <line x1="290" y1="275" x2="420" y2="438" stroke="rgba(192,126,48,.15)" stroke-width="1"
+              stroke-dasharray="3 4" />
+            <g transform="translate(368,372)">
+              <rect x="-22" y="-9" width="44" height="14" rx="2" fill="rgba(12,10,6,.78)" stroke="rgba(192,126,48,.22)"
+                stroke-width=".8" /><text x="0" y="1.5" font-family="sans-serif" font-size="7"
+                fill="rgba(192,126,48,.7)" letter-spacing="1" text-anchor="middle">~ 15 km</text>
+            </g>
+            <g transform="translate(188,302) rotate(-26)"><text x="0" y="0" font-family="sans-serif" font-size="7"
+                fill="rgba(138,110,80,.4)" letter-spacing="2">UDUGAMA ROAD</text></g>
+            <circle cx="320" cy="248" r="26" fill="none" stroke="rgba(192,126,48,.12)" stroke-width="1">
+              <animate attributeName="r" values="20;34;20" dur="3s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="320" cy="248" r="18" fill="rgba(192,126,48,.08)" stroke="rgba(192,126,48,.3)"
+              stroke-width="1.5" />
+            <path
+              d="M320 228 C313 228 307 234 307 241 C307 252 320 265 320 265 C320 265 333 252 333 241 C333 234 327 228 320 228Z"
+              fill="rgba(192,126,48,.88)" filter="url(#gl)" />
+            <circle cx="320" cy="241" r="4.5" fill="rgba(12,10,6,.7)" />
+            <g transform="translate(320,207)">
+              <rect x="-52" y="-13" width="104" height="23" rx="2" fill="rgba(12,10,6,.9)" stroke="rgba(192,126,48,.45)"
+                stroke-width="1" />
+              <line x1="0" y1="10" x2="0" y2="21" stroke="rgba(192,126,48,.45)" stroke-width="1" /><text x="0" y="-1"
+                font-family="serif" font-size="8.5" fill="rgba(216,160,58,.95)" letter-spacing="1.5"
+                text-anchor="middle">KOTTAWA LAND</text><text x="0" y="8" font-family="sans-serif" font-size="6.5"
+                fill="rgba(138,110,80,.8)" letter-spacing="1" text-anchor="middle">Yakkalamulla · Galle</text>
+            </g>
+            <g transform="translate(598,46)">
+              <circle cx="0" cy="0" r="18" fill="rgba(12,10,6,.65)" stroke="rgba(192,126,48,.2)" stroke-width="1" />
+              <path d="M0,-13 L2.5,-3 L0,0 L-2.5,-3Z" fill="rgba(192,126,48,.8)" />
+              <path d="M0,13 L2.5,3 L0,0 L-2.5,3Z" fill="rgba(138,110,80,.35)" />
+              <circle cx="0" cy="0" r="2" fill="rgba(192,126,48,.7)" /><text x="0" y="-17" font-family="sans-serif"
+                font-size="7" fill="rgba(192,126,48,.8)" text-anchor="middle">N</text>
+            </g>
+            <g transform="translate(42,46)">
+              <line x1="0" y1="6" x2="60" y2="6" stroke="rgba(192,126,48,.45)" stroke-width="1.5" />
+              <line x1="0" y1="2" x2="0" y2="10" stroke="rgba(192,126,48,.45)" stroke-width="1.5" />
+              <line x1="60" y1="2" x2="60" y2="10" stroke="rgba(192,126,48,.45)" stroke-width="1.5" /><text x="30"
+                y="-1" font-family="sans-serif" font-size="7" fill="rgba(138,110,80,.6)" text-anchor="middle"
+                letter-spacing="1">10 KM</text>
+            </g>
+            <radialGradient id="vig" cx="50%" cy="50%" r="70%">
+              <stop offset="60%" stop-color="transparent" />
+              <stop offset="100%" stop-color="rgba(6,10,4,.55)" />
+            </radialGradient>
+            <rect width="640" height="480" fill="url(#vig)" />
+            <path d="M0 0L28 0M0 0L0 28" stroke="rgba(192,126,48,.2)" stroke-width="1" fill="none" />
+            <path d="M640 0L612 0M640 0L640 28" stroke="rgba(192,126,48,.2)" stroke-width="1" fill="none" />
+            <path d="M0 480L28 480M0 480L0 452" stroke="rgba(192,126,48,.2)" stroke-width="1" fill="none" />
+            <path d="M640 480L612 480M640 480L640 452" stroke="rgba(192,126,48,.2)" stroke-width="1" fill="none" />
+          </svg>
+          <div class="map-pin-label"><span class="bi"><span class="t-en">Yakkalamulla · Galle</span><span
+                class="t-si">යක්කලමුල්ල · ගාල්ල</span></span></div>
+          <a class="map-open-btn" href="https://maps.google.com/maps?q=6.1167,80.3167" target="_blank" rel="noopener"
+            aria-label="Open in Google Maps">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+            <span class="bb" style="display:inline-grid;"><span class="t-en">Open in Maps</span><span
+                class="t-si">සිතියමේ විවෘත කරන්න</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Branch divider 4 -->
+  <svg class="branch-div" viewBox="0 0 1440 32" preserveAspectRatio="none" style="width:100%;height:32px;"
+    aria-hidden="true">
+    <path d="M0,16 C200,24 400,8 600,18 C800,28 1000,8 1200,16 C1320,20 1400,14 1440,16" fill="none"
+      stroke="rgba(42,68,34,.28)" stroke-width="1.2" />
+    <ellipse cx="600" cy="18" rx="6" ry="9" fill="rgba(74,118,64,.2)" transform="rotate(-8,600,18)" />
+    <ellipse cx="1200" cy="16" rx="5" ry="7" fill="rgba(74,118,64,.17)" transform="rotate(15,1200,16)" />
+  </svg>
+
+  <section class="docs-wrap" id="documents" aria-labelledby="docs-h">
+    <div class="docs-top rv">
+      <div>
+        <div class="sec-eye"><span class="bi"><span class="t-en">Legal Documents</span><span class="t-si">නීතිමය
+              ලේඛන</span></span></div>
+        <h2 class="sec-title bb" id="docs-h"><span class="t-en">Title Deeds &amp; <em>Survey Plans</em></span><span
+            class="t-si">ඔප්පු සහ <em>මිනින්දෝරු සැලසුම්</em></span></h2>
+      </div>
+      <div class="docs-hint bb rv d2"><span class="t-en">Expand a folder · click a document to preview</span><span
+          class="t-si">ෆෝල්ඩරය විවෘත කරන්න · ලේඛනය ක්ලික් කරන්න</span></div>
+    </div>
+    <div class="folders rv d1" id="foldersEl"></div>
+  </section>
+
+  <!-- GALLERY MODAL -->
+  <div class="gm" id="galModal" role="dialog" aria-modal="true" aria-label="Property gallery">
+    <div class="gm-head">
+      <div class="gm-ttl"><span class="bb"><span class="t-en">Property Gallery</span><span class="t-si">දේපළ
+            ගැලරිය</span></span><span class="gm-ct" id="gmCt" aria-live="polite"></span></div>
+      <div class="gm-fltrs" role="group">
+        <button class="gm-fb on" id="gf-all" onclick="gmFilter('all')"><span class="bi"
+            style="display:inline-grid"><span class="t-en">All</span><span class="t-si">සියල්ල</span></span></button>
+        <button class="gm-fb" id="gf-photo" onclick="gmFilter('photo')"><span class="bi"
+            style="display:inline-grid"><span class="t-en">Photos</span><span
+              class="t-si">ඡායාරූප</span></span></button>
+        <button class="gm-fb" id="gf-video" onclick="gmFilter('video')"><span class="bi"
+            style="display:inline-grid"><span class="t-en">Videos</span><span class="t-si">වීඩියෝ</span></span></button>
+      </div>
+      <button class="gm-x" onclick="gmClose()" aria-label="Close gallery">✕</button>
+    </div>
+    <div class="gm-body">
+      <div class="gm-grid" id="gmGrid"></div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lb" id="lb" role="dialog" aria-modal="true">
+    <button class="lb-btn lb-close" onclick="lbClose()" aria-label="Close">✕</button>
+    <button class="lb-btn lb-prev" onclick="lbNav(-1)" aria-label="Previous">←</button>
+    <div class="lb-inner" id="lbInner"></div>
+    <button class="lb-btn lb-next" onclick="lbNav(1)" aria-label="Next">→</button>
+    <div class="lb-cnt" id="lbCnt" aria-live="polite"></div>
+  </div>
+
+  <!-- PDF MODAL -->
+  <div class="pm" id="pm" role="dialog" aria-modal="true" aria-labelledby="pmTtl">
+    <div class="pm-box">
+      <div class="pm-head">
+        <span class="pm-ttl" id="pmTtl">Document</span>
+        <div class="pm-acts">
+          <button class="pm-btn pm-ext" onclick="pdfTab()" aria-label="Open in new tab"><svg width="13" height="13"
+              fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg></button>
+          <button class="pm-btn pm-cls" onclick="pdfClose()" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div class="pm-body"><iframe id="pmFrame" title="PDF preview"></iframe></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="ft-brand bb"><span class="t-en">Kottawa<em>Land</em></span><span
+            class="t-si">කොට්ටව<em>ඉඩම</em></span></div>
+        <div class="ft-sub bb"><span class="t-en">Mana Nadula · Pahala Deniya Goda · Yakkalamulla</span><span
+            class="t-si">මානා නදුල · පහල දෙනිය ගොඩ · යක්කලමුල්ල</span></div>
+        <div class="ft-badge">Rs. 40,000,000</div>
+      </div>
+      <div class="ft-desc bb">
+        <p class="t-en">Two parcels of pristine forest land in Yakkalamulla, Galle District. A natural stream divides
+          the parcels. Existing cinnamon cultivation, direct carpet road access, and clear title deeds make this a rare
+          opportunity for eco-tourism or a private forest retreat.</p>
+        <p class="t-si">ගාල්ල දිස්ත්‍රික්කයේ යක්කලමුල්ලෙහි ස්වාභාවික කැළෑ ඉඩම් දෙකක්. ස්වාභාවික දොළ, කාපට් මාර්ගය,
+          නිරවුල් ඔප්පු, කුරුඳු වගාව.</p>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span class="ft-copy">© 2026 Kottawa Land · Yakkalamulla · Galle · Sri Lanka</span>
+      <span class="ft-status">Private Sale</span>
+    </div>
+  </footer>
+
+  <!-- <button class="enquire-btn bb"
+    onclick="window.location.href='https://mail.google.com/mail/?view=cm&fs=1&to=ghajithkumar@gmail.com&su=Enquiry: Kottawa Land'">
+    Enquire
+  </button> -->
+  aria-label="Enquire about this property">
+  <span class="t-en">Enquire</span><span class="t-si">විමසන්න</span>
+  </button>
+
+  <script>
+    const cur = document.getElementById('cur'), curRing = document.getElementById('curRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cur.style.left = mx + 'px'; cur.style.top = my + 'px'; });
+    (function raf() { rx += (mx - rx) * .13; ry += (my - ry) * .13; curRing.style.left = rx + 'px'; curRing.style.top = ry + 'px'; requestAnimationFrame(raf); })();
+
+    /* LEAVES */
+    const lw = document.getElementById('leavesWrap');
+    const lc = ['rgba(74,118,64,.16)', 'rgba(58,94,46,.14)', 'rgba(104,148,78,.12)', 'rgba(78,118,40,.1)', 'rgba(42,68,34,.18)', 'rgba(106,148,70,.13)'];
+    for (let i = 0; i < 14; i++) {
+      const l = document.createElement('div'); l.className = 'leaf-p';
+      const sz = 12 + Math.random() * 18, left = Math.random() * 100, dur = 14 + Math.random() * 14, delay = Math.random() * 18;
+      const r0 = (Math.random() - .5) * 60, r1 = r0 + (Math.random() > .5 ? 1 : -1) * (220 + Math.random() * 120), dx = (Math.random() - .5) * 180, op = 0.1 + Math.random() * 0.12;
+      l.style.cssText = `--lw:${sz}px;--lc:${lc[i % lc.length]};--ld:${dur}s;--dl:${delay}s;--r0:${r0}deg;--r1:${r1}deg;--dx:${dx}px;--lo:${op};left:${left}%;bottom:-60px;`;
+      lw.appendChild(l);
+    }
+
+    /* LANG */
+    let lang = 'en';
+    function setLang(l) { lang = l; document.body.classList.toggle('lang-si', l === 'si'); document.getElementById('btn-en').classList.toggle('active', l === 'en'); document.getElementById('btn-si').classList.toggle('active', l === 'si'); document.getElementById('btn-en').setAttribute('aria-pressed', l === 'en'); document.getElementById('btn-si').setAttribute('aria-pressed', l === 'si'); updateNote(); }
+
+    /* MEDIA */
+    const PE = new Set(['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif']), VE = new Set(['mp4', 'webm', 'mov', 'm4v']);
+    const FB = [{ src: 'images/WhatsApp Image 2026-02-25 at 18.08.21.jpeg', type: 'photo' }, { src: 'images/WhatsApp Image 2026-02-25 at 18.08.22.jpeg', type: 'photo' }, { src: 'images/WhatsApp Image 2026-02-25 at 18.08.23.jpeg', type: 'photo' }, { src: 'images/WhatsApp Image 2026-02-25 at 18.08.24.jpeg', type: 'photo' }, { src: 'images/WhatsApp Image 2026-02-25 at 18.08.25 (1).jpeg', type: 'photo' }, { src: 'images/WhatsApp Image 2026-02-25 at 18.08.25.jpeg', type: 'photo' }, { src: 'images/WhatsApp Image 2026-02-25 at 18.09.45.jpeg', type: 'photo' }, { src: 'images/WhatsApp Image 2026-02-25 at 18.09.46.jpeg', type: 'photo' }, { src: 'images/WhatsApp Image 2026-02-25 at 18.09.47 (1).jpeg', type: 'photo' }, { src: 'images/WhatsApp Image 2026-02-25 at 18.09.47.jpeg', type: 'photo' }, { src: 'images/WhatsApp Image 2026-02-25 at 18.09.57.jpeg', type: 'photo' }, { src: 'images/WhatsApp Video 2026-02-25 at 18.08.20.mp4', type: 'video' }, { src: 'images/WhatsApp Video 2026-02-25 at 18.08.27.mp4', type: 'video' }, { src: 'images/WhatsApp Video 2026-02-25 at 18.08.28.mp4', type: 'video' }, { src: 'images/WhatsApp Video 2026-02-25 at 18.08.30.mp4', type: 'video' }, { src: 'images/WhatsApp Video 2026-02-25 at 18.09.44.mp4', type: 'video' }, { src: 'images/WhatsApp Video 2026-02-25 at 18.09.54.mp4', type: 'video' }];
+    let MEDIA = [];
+
+    async function discoverMedia() {
+      try { const res = await fetch('images/'); if (!res.ok) throw 0; const doc = new DOMParser().parseFromString(await res.text(), 'text/html'); const files = [...doc.querySelectorAll('a[href]')].map(a => a.getAttribute('href')).filter(h => { const n = h.split('/').pop(); if (!n || n.includes('?') || n.startsWith('.')) return false; const e = n.split('.').pop().toLowerCase(); return PE.has(e) || VE.has(e); }).map(h => { const n = h.split('/').pop(); const e = n.split('.').pop().toLowerCase(); return { src: 'images/' + n, type: PE.has(e) ? 'photo' : 'video' }; }); if (files.length) { files.sort((a, b) => a.src.localeCompare(b.src, undefined, { numeric: true, sensitivity: 'base' })); MEDIA = files; } else throw 0; } catch { MEDIA = FB; }
+      buildPrev(); updateNote();
+    }
+
+    const gp = document.getElementById('galPreview');
+    function buildPrev() { gp.innerHTML = ''; MEDIA.filter(m => m.type === 'photo').slice(0, 3).forEach((m, i) => { const d = document.createElement('div'); d.className = 'gthumb'; d.setAttribute('role', 'button'); d.setAttribute('tabindex', '0'); d.setAttribute('aria-label', `View photo ${i + 1}`); d.innerHTML = `<img src="${m.src}" alt="Land photo ${i + 1}" loading="lazy"><div class="gthumb-ov" aria-hidden="true"><div class="gthumb-btn"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>`; const open = () => { gmOpen(); setTimeout(() => lbOpen(i, MEDIA.filter(m => m.type === 'photo')), 80); }; d.addEventListener('click', open); d.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } }); gp.appendChild(d); }); }
+
+    function updateNote() { const p = MEDIA.filter(m => m.type === 'photo').length, v = MEDIA.filter(m => m.type === 'video').length; const en = [], si = []; if (p) { en.push(`${p} photo${p !== 1 ? 's' : ''}`); si.push(`ඡායාරූප ${p}`); } if (v) { en.push(`${v} video${v !== 1 ? 's' : ''}`); si.push(`වීඩියෝ ${v}`); } document.getElementById('galNoteEn').textContent = en.join(' · ') + ' — click to open gallery'; document.getElementById('galNoteSi').textContent = si.join(' · ') + ' — ගැලරිය විවෘත කරන්න'; document.getElementById('galBtnEn').textContent = `Open Full Gallery (${MEDIA.length})`; document.getElementById('galBtnSi').textContent = `සම්පූර්ණ ගැලරිය (${MEDIA.length})`; }
+
+    discoverMedia();
+
+    /* GALLERY MODAL */
+    const galM = document.getElementById('galModal'), gmGrid = document.getElementById('gmGrid'); let gf = 'all';
+    function gmOpen() { galM.classList.add('open'); document.body.style.overflow = 'hidden'; gmRender(gf); }
+    function gmClose() { galM.classList.remove('open'); document.body.style.overflow = ''; gmGrid.querySelectorAll('video').forEach(v => v.pause()); }
+    function gmFilter(f) { gf = f;['all', 'photo', 'video'].forEach(k => document.getElementById('gf-' + k).classList.toggle('on', k === f)); gmRender(f); }
+    function gmRender(f) { const set = f === 'all' ? MEDIA : MEDIA.filter(m => m.type === f); document.getElementById('gmCt').textContent = `${set.length} item${set.length !== 1 ? 's' : ''}`; gmGrid.innerHTML = ''; if (!set.length) { gmGrid.innerHTML = `<div class="gm-empty">No ${f === 'video' ? 'videos' : 'photos'} found</div>`; return; } set.forEach((m, fi) => { const d = document.createElement('div'); d.className = 'gm-it'; d.setAttribute('role', 'button'); d.setAttribute('tabindex', '0'); if (m.type === 'video') { d.innerHTML = `<video src="${m.src}" muted loop preload="metadata" playsinline></video><div class="gm-vid-tag">▶ Video</div><div class="gm-it-ov"><div class="gm-it-btn"><svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>`; d.addEventListener('mouseenter', () => d.querySelector('video').play()); d.addEventListener('mouseleave', () => { const v = d.querySelector('video'); v.pause(); v.currentTime = 0; }); } else { d.innerHTML = `<img src="${m.src}" alt="" loading="lazy"><div class="gm-it-ov"><div class="gm-it-btn"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div></div>`; } const open = () => lbOpen(fi, set); d.addEventListener('click', open); d.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } }); gmGrid.appendChild(d); }); }
+
+    /* LIGHTBOX */
+    const lbEl = document.getElementById('lb'), lbInner = document.getElementById('lbInner'), lbCnt = document.getElementById('lbCnt'); let lbI = 0, lbSet = [];
+    function lbOpen(i, set) { lbSet = set; lbI = i; lbRender(); lbEl.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function lbClose() { lbEl.classList.remove('open'); document.body.style.overflow = ''; lbInner.innerHTML = ''; }
+    function lbNav(d) { const v = lbInner.querySelector('video'); if (v) v.pause(); lbI = (lbI + d + lbSet.length) % lbSet.length; lbRender(); }
+    function lbRender() { lbInner.innerHTML = ''; const m = lbSet[lbI]; if (m.type === 'video') { const v = document.createElement('video'); v.className = 'lb-vid'; v.src = m.src; v.controls = true; v.autoplay = true; v.setAttribute('playsinline', ''); lbInner.appendChild(v); } else { const img = document.createElement('img'); img.className = 'lb-img'; img.src = m.src; img.alt = ''; lbInner.appendChild(img); } lbCnt.textContent = `${lbI + 1} / ${lbSet.length}`; }
+    lbEl.addEventListener('click', e => { if (e.target === lbEl) lbClose(); });
+
+    /* DOCUMENT FOLDERS */
+    const GROUPS = [{ icon: '📋', en: 'Deeds', si: 'ඔප්පු', docs: [{ f: 'pdfs/land1 deed.pdf', en: 'Title Deed — Mana Nadula', si: 'ඔප්පු — මානා නදුල' }, { f: 'pdfs/land2 deed.pdf', en: 'Title Deed — Pahala Deniya Goda', si: 'ඔප්පු — පහල දෙනිය ගොඩ' }] }, { icon: '📐', en: 'Survey Plans', si: 'මිනින්දෝරු සැලසුම්', docs: [{ f: 'pdfs/land1 plan.pdf', en: 'Survey Plan — Mana Nadula', si: 'සැලැස්ම — මානා නදුල' }, { f: 'pdfs/land2 plan.pdf', en: 'Survey Plan — Pahala Deniya Goda', si: 'සැලැස්ම — පහල දෙනිය ගොඩ' }] }, { icon: '🏛️', en: 'Title Reports', si: 'ශීර්ෂ වාර්තා', docs: [] }, { icon: '📄', en: 'Other Reports', si: 'වෙනත් වාර්තා', docs: [{ f: 'pdfs/pdf5.pdf', en: 'MBRO Report', si: 'MBRO වාර්තාව' }] }];
+    const fEl = document.getElementById('foldersEl'); let dc = 0;
+    GROUPS.forEach((g, gi) => { const isEmpty = g.docs.length === 0; const f = document.createElement('div'); f.className = 'folder rv d' + (gi % 4 + 1); if (gi === 0) f.classList.add('open'); f.innerHTML = `<div class="folder-tab" role="button" tabindex="0" aria-expanded="${gi === 0}" aria-controls="fb-${gi}" onclick="toggleF(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleF(this);}"><div class="folder-leaf">${g.icon}</div><div class="folder-name bb"><span class="t-en">${g.en}</span><span class="t-si">${g.si}</span></div><span class="folder-count bb"><span class="t-en">${g.docs.length} doc${g.docs.length !== 1 ? 's' : ''}</span><span class="t-si">ලේඛන ${g.docs.length}</span></span><div class="folder-arrow">›</div></div><div class="folder-body" id="fb-${gi}"></div>`; const body = f.querySelector('.folder-body'); if (isEmpty) { body.innerHTML = `<div class="folder-empty bb"><span class="t-en">No documents yet</span><span class="t-si">තවම ලේඛන නොමැත</span></div>`; } else { g.docs.forEach(doc => { const num = String(++dc).padStart(2, '0'); const c = document.createElement('div'); c.className = 'doc-card'; c.setAttribute('role', 'button'); c.setAttribute('tabindex', '0'); c.setAttribute('aria-label', doc.en); c.innerHTML = `<div class="doc-n">${num}</div><div class="doc-fi"><svg width="9" height="12" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 12 16"><path d="M7 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5z"/><path d="M7 1v4h4"/></svg><span class="doc-fi-l">PDF</span></div><div class="doc-ttl bb"><span class="t-en">${doc.en}</span><span class="t-si">${doc.si}</span></div><div class="doc-act"><span class="bb" style="display:inline-grid"><span class="t-en">Preview</span><span class="t-si">බලන්න</span></span><svg width="7" height="7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>`; const open = () => pdfOpen(doc.f, lang === 'si' ? doc.si : doc.en); c.addEventListener('click', open); c.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } }); body.appendChild(c); }); } fEl.appendChild(f); });
+    function toggleF(tab) { const folder = tab.parentElement; const isOpen = folder.classList.toggle('open'); tab.setAttribute('aria-expanded', isOpen); }
+
+    /* PDF MODAL */
+    let curPdf = ''; const pmEl = document.getElementById('pm');
+    function pdfOpen(src, title) { curPdf = src; document.getElementById('pmFrame').src = src; document.getElementById('pmTtl').textContent = title; pmEl.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function pdfClose() { pmEl.classList.remove('open'); document.getElementById('pmFrame').src = ''; document.body.style.overflow = ''; }
+    function pdfTab() { if (curPdf) window.open(curPdf, '_blank'); }
+    pmEl.addEventListener('click', e => { if (e.target === pmEl) pdfClose(); });
+
+    /* SCROLL REVEAL */
+    const rvEls = document.querySelectorAll('.rv');
+    const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); }), { threshold: .06 });
+    rvEls.forEach(e => io.observe(e));
+
+    /* KEYBOARD */
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { lbClose(); gmClose(); pdfClose(); } if (lbEl.classList.contains('open')) { if (e.key === 'ArrowLeft') lbNav(-1); if (e.key === 'ArrowRight') lbNav(1); } });
+  </script>
+</body>
+
+</html>
