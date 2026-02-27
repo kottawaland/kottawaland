@@ -1953,6 +1953,15 @@
         grid-template-columns: 1fr 1fr;
       }
     }
+    @media (hover: none) and (pointer: coarse) {
+  body {
+    cursor: auto;          /* restore the default cursor */
+  }
+  .cur,
+  .cur-ring {
+    display: none;         /* hide the custom cursor elements */
+  }
+}
   </style>
 </head>
 
